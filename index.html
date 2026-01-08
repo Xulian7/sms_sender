@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pruebas SMS Secuenciales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #1e1e1e;
+      color: #eee;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .sms-btn {
+      display: block;
+      margin: 10px 0;
+      padding: 15px;
+      width: 100%;
+      font-size: 16px;
+      background: #007acc;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sms-btn:hover {
+      background: #005f99;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel de Comandos SMS</h1>
+
+  <a href="sms:?body=SOS,A,3233270740#" class="sms-btn">SOS</a>
+  <a href="sms:?body=CENTER,A,3233270740#" class="sms-btn">CENTER</a>
+  <a href="sms:?body=PARAM#" class="sms-btn">PARAM</a>
+  <a href="sms:?body=SERVER,0,157.230.179.118,5023,0#" class="sms-btn">SERVER</a>
+  <a href="sms:?body=APN,web.vmc.net.co#" class="sms-btn">APN</a>
+  <a href="sms:?body=TIMER,30,1800#" class="sms-btn">TIMER</a>
+  <a href="sms:?body=ANGLEREP,ON,30,2#" class="sms-btn">ANGLEREP</a>
+  <a href="sms:?body=GMT,W,0,0#" class="sms-btn">GMT</a>
+  <a href="sms:?body=RELAY,1#" class="sms-btn">RELAY ON</a>
+  <a href="sms:?body=RELAY,0#" class="sms-btn">RELAY OFF</a>
+  <a href="sms:?body=Reset#" class="sms-btn">RESET</a>
+
+</body>
+</html>
