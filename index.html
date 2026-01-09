@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pruebas SMS Secuenciales</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,55 +35,102 @@
       padding: 15px;
       width: 100%;
       font-size: 16px;
-      background: #007acc;
       border: none;
       color: white;
       border-radius: 8px;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, opacity 0.3s;
+      background: #007acc;
+      opacity: 0.6;
     }
 
-    .sms-btn:hover {
-      background: #005f99;
+    .sms-btn.active {
+      background: #d4aa00;
+      opacity: 1;
+    }
+
+    .sms-btn.sent {
+      background: #2e8b57;
+      opacity: 1;
+    }
+
+    .sms-btn.reset {
+      background: #b22222;
+      opacity: 1;
     }
   </style>
 </head>
+
 <body>
   <h1>Panel de Comandos SMS</h1>
 
   <input
     type="tel"
     id="telefono"
-    placeholder="Número destino (ej: 3233270740)"
+    placeholder="Número destino"
     oninput="actualizarLinks()"
   />
 
-  <a id="btn-sos" class="sms-btn">SOS</a>
-  <a id="btn-center" class="sms-btn">CENTER</a>
+  <a class="sms-btn active" onclick="enviar(0)">SOS</a>
+  <a class="sms-btn" onclick="enviar(1)">CENTER</a>
+  <a class="sms-btn" onclick="enviar(2)">PARAM</a>
+  <a class="sms-btn" onclick="enviar(3)">SERVER</a>
+  <a class="sms-btn" onclick="enviar(4)">APN</a>
+  <a class="sms-btn" onclick="enviar(5)">TIMER</a>
+  <a class="sms-btn" onclick="enviar(6)">ANGLEREP</a>
+  <a class="sms-btn" onclick="enviar(7)">GMT</a>
+  <a class="sms-btn" onclick="enviar(8)">RELAY ON</a>
+  <a class="sms-btn" onclick="enviar(9)">RELAY OFF</a>
+  <a class="sms-btn" onclick="enviar(10)">RESET</a>
 
-  <a href="sms:?body=PARAM#" class="sms-btn">PARAM</a>
-  <a href="sms:?body=SERVER,0,157.230.179.118,5023,0#" class="sms-btn">SERVER</a>
-  <a href="sms:?body=APN,web.vmc.net.co#" class="sms-btn">APN</a>
-  <a href="sms:?body=TIMER,30,1800#" class="sms-btn">TIMER</a>
-  <a href="sms:?body=ANGLEREP,ON,30,2#" class="sms-btn">ANGLEREP</a>
-  <a href="sms:?body=GMT,W,0,0#" class="sms-btn">GMT</a>
-  <a href="sms:?body=RELAY,1#" class="sms-btn">RELAY ON</a>
-  <a href="sms:?body=RELAY,0#" class="sms-btn">RELAY OFF</a>
-  <a href="sms:?body=Reset#" class="sms-btn">RESET</a>
+  <button class="sms-btn reset" onclick="resetSecuencia()">RESET SECUENCIA</button>
 
   <script>
-    function actualizarLinks() {
+    const comandos = [
+      num => `sms:${num}?body=SOS,A,${num}#`,
+      num => `sms:${num}?body=CENTER,A,${num}#`,
+      _   => `sms:?body=PARAM#`,
+      _   => `sms:?body=SERVER,0,157.230.179.118,5023,0#`,
+      _   => `sms:?body=APN,web.vmc.net.co#`,
+      _   => `sms:?body=TIMER,30,1800#`,
+      _   => `sms:?body=ANGLEREP,ON,30,2#`,
+      _   => `sms:?body=GMT,W,0,0#`,
+      _   => `sms:?body=RELAY,1#`,
+      _   => `sms:?body=RELAY,0#`,
+      _   => `sms:?body=Reset#`
+    ];
+
+    const botones = document.querySelectorAll(".sms-btn");
+    let indice = 0;
+
+    function enviar(i) {
       const num = document.getElementById("telefono").value.trim();
+      if (!num) {
+        alert("Primero ingresa el número destino");
+        return;
+      }
 
-      if (!num) return;
+      window.location.href = comandos[i](num);
 
-      document.getElementById("btn-sos").href =
-        `sms:?body=SOS,A,${num}#`;
+      botones[i].classList.remove("active");
+      botones[i].classList.add("sent");
 
-      document.getElementById("btn-center").href =
-        `sms:?body=CENTER,A,${num}#`;
+      if (botones[i + 1]) {
+        botones[i + 1].classList.add("active");
+      }
+
+      indice = i + 1;
+    }
+
+    function resetSecuencia() {
+      botones.forEach(b => {
+        b.classList.remove("sent", "active");
+        b.style.opacity = 0.6;
+      });
+      botones[0].classList.add("active");
+      indice = 0;
     }
   </script>
 </body>
