@@ -16,7 +16,16 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
     }
 
     .sms-btn {
@@ -43,8 +52,16 @@
 <body>
   <h1>Panel de Comandos SMS</h1>
 
-  <a href="sms:?body=SOS,A,3233270740#" class="sms-btn">SOS</a>
-  <a href="sms:?body=CENTER,A,3233270740#" class="sms-btn">CENTER</a>
+  <input
+    type="tel"
+    id="telefono"
+    placeholder="Número destino (ej: 3233270740)"
+    oninput="actualizarLinks()"
+  />
+
+  <a id="btn-sos" class="sms-btn">SOS</a>
+  <a id="btn-center" class="sms-btn">CENTER</a>
+
   <a href="sms:?body=PARAM#" class="sms-btn">PARAM</a>
   <a href="sms:?body=SERVER,0,157.230.179.118,5023,0#" class="sms-btn">SERVER</a>
   <a href="sms:?body=APN,web.vmc.net.co#" class="sms-btn">APN</a>
@@ -55,5 +72,18 @@
   <a href="sms:?body=RELAY,0#" class="sms-btn">RELAY OFF</a>
   <a href="sms:?body=Reset#" class="sms-btn">RESET</a>
 
+  <script>
+    function actualizarLinks() {
+      const num = document.getElementById("telefono").value.trim();
+
+      if (!num) return;
+
+      document.getElementById("btn-sos").href =
+        `sms:?body=SOS,A,${num}#`;
+
+      document.getElementById("btn-center").href =
+        `sms:?body=CENTER,A,${num}#`;
+    }
+  </script>
 </body>
 </html>
